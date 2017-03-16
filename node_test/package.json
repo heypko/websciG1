@@ -1,0 +1,19 @@
+{
+  "name": "node_test",
+  "version": "1.0.0",
+  "description": "Testing diff module",
+  "main": "diff.js",
+  "scripts": {
+    "start": "node diff.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/highpants/websciG1.git"
+  },
+  "author": "Peter Ko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/highpants/websciG1/issues"
+  },
+  "homepage": "https://github.com/highpants/websciG1#readme"
+}
