@@ -15,14 +15,25 @@ app.get('/', function (req, res) {
 app.use(express.static(__dirname));
 
 // Parse text from ecode360
-var statParser = htmlToJson.createParser(['a.titleLink,.para', {
+var statParser = htmlToJson.createParser(
+  ['.printHeader,a.titleLink,a.litem_number,.para,.history', {
+  'type': function ($a) {
+    return $a.attr('class');
+  },
   'text': function ($a) {
     return $a.text();
   },
+
 }]);
 
 statParser.request('http://ecode360.com/print/GL1564?guid=11768279&children=true').done(function (stats) {
   console.log(stats);
+  // Write to File
+  var filename = "./statuteEx.json";
+  fs.writeFile(filename, JSON.stringify(stats), (err) => {
+    if (err) throw err;
+    console.log('Successfully wrote to statuteEx.json');
+  });
 });
 
 // Demo for text comparison
