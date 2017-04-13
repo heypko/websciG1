@@ -26,7 +26,10 @@ var statParser = htmlToJson.createParser(
 
 }]);
 
-statParser.request('http://ecode360.com/print/GL1564?guid=11768279&children=true').done(function (stats) {
+//http://ecode360.com/print/GL1564?guid=11768279&children=true
+var targetURL = "http://ecode360.com/print/OY1221?guid=26874722&children=true"
+
+statParser.request(targetURL).done(function (stats) {
   console.log(stats);
   // Write to File
   var filename = "./statuteEx.json";
