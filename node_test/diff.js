@@ -14,7 +14,7 @@ app.get('/', function (req, res) {
 
 app.use(express.static(__dirname));
 
-// Parse text from ecode360
+// Text parser for ecode360 print pages
 var statParser = htmlToJson.createParser(
   ['.printHeader,a.titleLink,a.litem_number,.para,.history', {
   'type': function ($a) {
@@ -23,21 +23,36 @@ var statParser = htmlToJson.createParser(
   'text': function ($a) {
     return $a.text();
   },
-
 }]);
 
-//http://ecode360.com/print/GL1564?guid=11768279&children=true
-var targetURL = "http://ecode360.com/print/OY1221?guid=26874722&children=true"
 
-statParser.request(targetURL).done(function (stats) {
-  console.log(stats);
-  // Write to File
-  var filename = "./statuteEx.json";
-  fs.writeFile(filename, JSON.stringify(stats), (err) => {
-    if (err) throw err;
-    console.log('Successfully wrote to statuteEx.json');
-  });
-});
+// Start update statutes
+fs.readFile('./toc.json', 'utf8', (err, data) => {
+  if (err) throw err;
+  obj = JSON.parse(data);
+
+  // Iterate through JSON list of all statutes
+  for (var key in obj) {
+    (function(cntr) { // Start function closure
+      if (obj.hasOwnProperty(key)) {
+        var targetURL = obj[key];
+        var targetTitle = key;
+        console.log("Updating " + key + " with information from " + obj[key]);
+        // Make html-to-json request
+        statParser.request(targetURL).done(function (stats) {
+          // Write to current file in fs
+          var filename = targetTitle + ".json";
+          fs.writeFile(filename, JSON.stringify(stats), (err) => {
+            if (err) throw err;
+            console.log('Successfully wrote to ' + targetTitle + '.json');
+          });
+        });
+      }
+    })(key); // End function closure
+  }// End status iteration
+});// End update statutes
+
+
 
 // Demo for text comparison
 var json1 = JSON.parse(fs.readFileSync('filecmp1.json'));

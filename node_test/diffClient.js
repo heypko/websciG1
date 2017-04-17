@@ -1,4 +1,4 @@
-
+  
 var current = "\nTown of Oyster Bay, NY\nTuesday, April 11, 2017\n",
     update = "\nTown of Oyster Bay, NY\nTuesday, April 18, 2017\n",
     color = '',
