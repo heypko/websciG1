@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/highpants/websciG1/issues"
   },
-  "homepage": "https://github.com/highpants/websciG1#readme"
+  "homepage": "https://github.com/highpants/websciG1#readme",
+  "dependencies": {
+    "socket.io": "^1.7.3"
+  }
 }

@@ -2,6 +2,7 @@ var express = require('express');
 var http = require('http');
 var app = express();
 var server = http.createServer(app);
+var io = require('socket.io').listen(server);
 var jsdiff = require('diff');
 var fs = require('fs');
 var htmlToJson = require('html-to-json');
@@ -25,32 +26,52 @@ var statParser = htmlToJson.createParser(
   },
 }]);
 
+//
+// // user connected even handler
+// io.on('connection', function(socket){
+//
+//   // log & brodcast connect event
+//   console.log('a user connected');
+//
+//   // log disconnect event
+//   socket.on('disconnect', function(){
+//     console.log('user disconnected');
+//   });
+//
+//   // message received event handler
+//   socket.on('message', function(msg, res){
+//     // Display msg sent
+//     console.log(msg);
 
-// Start update statutes
-fs.readFile('./toc.json', 'utf8', (err, data) => {
-  if (err) throw err;
-  obj = JSON.parse(data);
+    // Start update statutes
+    fs.readFile('./toc.json', 'utf8', (err, data) => {
+      if (err) throw err;
+      obj = JSON.parse(data);
 
-  // Iterate through JSON list of all statutes
-  for (var key in obj) {
-    (function(cntr) { // Start function closure
-      if (obj.hasOwnProperty(key)) {
-        var targetURL = obj[key];
-        var targetTitle = key;
-        console.log("Updating " + key + " with information from " + obj[key]);
-        // Make html-to-json request
-        statParser.request(targetURL).done(function (stats) {
-          // Write to current file in fs
-          var filename = targetTitle + ".json";
-          fs.writeFile(filename, JSON.stringify(stats), (err) => {
-            if (err) throw err;
-            console.log('Successfully wrote to ' + targetTitle + '.json');
-          });
-        });
-      }
-    })(key); // End function closure
-  }// End status iteration
-});// End update statutes
+      // Iterate through JSON list of all statutes
+      for (var key in obj) {
+        (function(cntr) { // Start function closure
+          if (obj.hasOwnProperty(key)) {
+            var targetURL = obj[key];
+            var targetTitle = key;
+            console.log("Updating " + key + " with information from " + obj[key]);
+            // Make html-to-json request
+            statParser.request(targetURL).done(function (stats) {
+              // Write to current file in fs
+              var filename = targetTitle + ".json";
+              fs.writeFile(filename, JSON.stringify(stats), (err) => {
+                if (err) throw err;
+                console.log('Successfully wrote to ' + targetTitle + '.json');
+              });
+            });
+          }
+        })(key); // End function closure
+      }// End status iteration
+    });// End update statutes
+//   });// End message received
+// }); // End socket.io connection
+
+
 
 
 
