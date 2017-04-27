@@ -13,16 +13,20 @@
 </head>
 
 
+<div id="diffWindow">
+	<p> Diffcheck successful </p>
+</div>
+
 <!--Scripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script> 
+	var socket = io()
 
-<div id="diffWindow">
-	<p> Diffcheck successful </p>
-</div>
-
+	socket.emit("message", {});
+</script>
 
 </html>

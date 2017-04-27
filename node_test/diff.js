@@ -38,37 +38,8 @@ var statParser = htmlToJson.createParser(
 //     console.log('user disconnected');
 //   });
 //
-//   // message received event handler
-//   socket.on('message', function(msg, res){
-//     // Display msg sent
-//     console.log(msg);
-
-    // Start update statutes
-    fs.readFile('./toc.json', 'utf8', (err, data) => {
-      if (err) throw err;
-      obj = JSON.parse(data);
-
-      // Iterate through JSON list of all statutes
-      for (var key in obj) {
-        (function(cntr) { // Start function closure
-          if (obj.hasOwnProperty(key)) {
-            var targetURL = obj[key];
-            var targetTitle = key;
-            console.log("Updating " + key + " with information from " + obj[key]);
-            // Make html-to-json request
-            statParser.request(targetURL).done(function (stats) {
-              // Write to current file in fs
-              var filename = targetTitle + ".json";
-              fs.writeFile(filename, JSON.stringify(stats), (err) => {
-                if (err) throw err;
-                console.log('Successfully wrote to ' + targetTitle + '.json');
-              });
-            });
-          }
-        })(key); // End function closure
-      }// End status iteration
-    });// End update statutes
-//   });// End message received
+  // message received event handler
+  
 // }); // End socket.io connection
 
 
