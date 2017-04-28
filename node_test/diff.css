@@ -1,5 +1,19 @@
+.body {
+  background-color: red;
+  color: red;
+}
+
 #diffWindow {
   margin: 20px;
   border: 1px solid black;
   text-align:center;
+}
+
+
+#updateStatute {
+  margin: 20px;
+}
+
+#officerMap {
+  margin: 20px;
 }

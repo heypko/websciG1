@@ -1,0 +1,14 @@
+/* HEADER
+============================================================================= */
+#header                         { margin-bottom:50px; }
+
+    /* logo */
+    #logo                       { color:black; font-family:'Noto Sans'; font-size:80px; margin-bottom:50px; margin-top:50px; }
+    #logo span                  { display:inline-block; }
+
+
+#diffWindow {
+  margin: 20px;
+  border: 1px solid black;
+  text-align:center;
+}

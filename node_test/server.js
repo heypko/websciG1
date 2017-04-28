@@ -22,10 +22,12 @@ app.get('/public/diff.html', function(req, res) {
   res.sendFile(__dirname + '/public/diff.html')
 });
 
+app.use(express.static(__dirname));
+
 // start server
 server.listen(3000, function(){
   console.log('Server up on *:3000');
-}); 
+});
 
 // Need to change to some struct w/ a callback-timeout that updates
 // officer location every ___.
@@ -33,20 +35,20 @@ var livingOfficers = {};
 
 // user connected even handler
 io.on('connection', function(socket){
-  
+
   // log & brodcast connect event
   console.log('An officer connected');
-  
+
   // log disconnect event
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-  
+
   // message received event handler
   socket.on('location', function(msg){
     // log chat msg
     console.log('Received ' + msg.name + '/\'s location' + ': ' + msg.location);
-    
+
     livingOfficers[msg.name] = msg.location;
 
     socket.emit('receivedLocation', livingOfficers);
